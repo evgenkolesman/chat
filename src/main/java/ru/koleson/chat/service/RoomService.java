@@ -25,4 +25,9 @@ public class RoomService {
             repository.save(room);
         } else throw new ServerException("404");
     }
+
+    public void deleteRoom(Long id) {
+        if(repository.existsById(id))
+        repository.deleteById(id);
+    }
 }

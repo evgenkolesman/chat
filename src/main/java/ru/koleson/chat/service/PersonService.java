@@ -48,7 +48,7 @@ public class PersonService {
         } else throw new ServerException("500");
     }
 
-    public void deletePerson(String login) throws Exception{
+    public void deletePerson(String login) throws Exception {
         if (repoPerson.findByLogin(login) != null) {
             repoPerson.delete(findByLogin(login));
         } else throw new NotFoundException("404");
@@ -57,6 +57,7 @@ public class PersonService {
     /**
      * надо продумать как правильно сохранить room, чтобы присвоить им id
      * и вернуть его в update
+     *
      * @param id
      * @param login
      * @throws Exception
@@ -65,7 +66,7 @@ public class PersonService {
         Room room = serviceRoom.findById(id);
         Person person = repoPerson.findByLogin(login);
         room.setPrivateRoom(true);
-        List <Room> roomList = repoPerson.findByLogin(login).getRooms();
+        List<Room> roomList = repoPerson.findByLogin(login).getRooms();
         roomList.add(room);
         person.setRooms(roomList);
         repoPerson.save(person);
@@ -77,9 +78,10 @@ public class PersonService {
             room = new Room();
             serviceRoom.save(room);
         } else {
-        room = serviceRoom.findById(id); }
+            room = serviceRoom.findById(id);
+        }
         Person person = repoPerson.findByLogin(login);
-        List <Room> roomList = repoPerson.findByLogin(login).getRooms();
+        List<Room> roomList = repoPerson.findByLogin(login).getRooms();
         roomList.add(room);
         person.setRooms(roomList);
         repoPerson.save(person);
@@ -88,9 +90,14 @@ public class PersonService {
     public void updatePersonExitRoom(String login, Long id) throws Exception {
         Room room = serviceRoom.findById(id);
         Person person = repoPerson.findByLogin(login);
-        List <Room> roomList = repoPerson.findByLogin(login).getRooms();
+        List<Room> roomList = repoPerson.findByLogin(login).getRooms();
         roomList.remove(room);
         person.setRooms(roomList);
         repoPerson.save(person);
     }
+
+    public void deleteRoom(Long id) {
+        serviceRoom.deleteRoom(id);
+    }
+
 }

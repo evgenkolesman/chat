@@ -45,4 +45,10 @@ public class RoomController {
         personService.updatePersonExitRoom(login, id);
         return "200";
     }
+
+    @DeleteMapping("/id")
+    public String deleteRoom(@PathVariable Long id) {
+        personService.deleteRoom(id);
+        return "200";
+    }
 }

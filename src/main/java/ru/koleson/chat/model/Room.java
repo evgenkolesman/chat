@@ -21,4 +21,5 @@ public class Room {
     private Set<Message> messages;
 
     private Boolean privateRoom;
+
 }

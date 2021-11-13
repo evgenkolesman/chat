@@ -21,7 +21,7 @@ public class Message {
 
     private Timestamp data;
 
-    private Message of(String text) {
+    public static Message of(String text) {
         Message message = new Message();
         message.text = text;
         message.data = new Timestamp(System.currentTimeMillis());

@@ -35,7 +35,7 @@ public class Person {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
-    private Person of(String login, String name, String surname, String password) {
+    public static Person of(String login, String name, String surname, String password) {
         Person person = new Person();
         person.login = login;
         person.surname = surname;

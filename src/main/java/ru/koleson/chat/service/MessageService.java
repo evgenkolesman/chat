@@ -35,4 +35,10 @@ public class MessageService {
         repo.save(message);
         } else throw  new ServerException("500");
     }
+
+    public void deleteMessage(Long id) {
+        if (repo.findById(id).isPresent()) {
+            repo.deleteById(id);
+        }
+    }
 }
