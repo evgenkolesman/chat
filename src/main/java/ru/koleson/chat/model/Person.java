@@ -32,7 +32,7 @@ public class Person {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> messages;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
     public static Person of(String login, String name, String surname, String password) {

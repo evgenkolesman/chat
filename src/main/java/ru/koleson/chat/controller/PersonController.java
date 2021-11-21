@@ -42,4 +42,9 @@ public class PersonController {
         service.deletePerson(login);
         return "200";
     }
+
+    /**
+     * we use restTeamplate for update Role of Person
+     */
+    @PutMapping("role/{id}")
 }

@@ -1,9 +1,9 @@
 package ru.koleson.chat.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,12 +20,13 @@ import ru.koleson.chat.service.MessageService;
 import ru.koleson.chat.service.PersonService;
 import ru.koleson.chat.service.RoomService;
 
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest()
@@ -57,7 +58,6 @@ class MessageControllerTest {
     private PersonRepository personRepository;
 
     @Test
-    @Ignore
     void findMessageTestWithOutPerson() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Message message = Message.of("Hello");
@@ -68,24 +68,82 @@ class MessageControllerTest {
         person.setRooms(List.of(room));
         when(personService.findByLogin(person.getLogin())).thenReturn(person);
         when(roomService.findById(room.getId())).thenReturn(room);
+        when(messageService.findById(message.getId())).thenReturn(message);
+
+        String req = mapper.writer().writeValueAsString(message);
+        mvc.perform(get("/person/1/room/1/1").contentType(MediaType.APPLICATION_JSON)
+                .content(req)).andExpect(status().isOk());
+
+    }
+
+    @Test
+    void findAll() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = Message.of("Hello");
+        message.setId(1L);
+        Person person = Person.of("1","1","1","1");
+        Room room = new Room();
+        room.setId(1L);
+        person.setRooms(List.of(room));
+        when(personService.findAll()).thenReturn(List.of(person));
+        when(roomService.findById(room.getId())).thenReturn(room);
         when(messageService.findAll()).thenReturn(List.of(message));
 
         String req = mapper.writer().writeValueAsString(message);
-        mvc.perform(get("/person/1/room/1/)").contentType(MediaType.APPLICATION_JSON)
+        mvc.perform(get("/person/1/room/1/").contentType(MediaType.APPLICATION_JSON)
                 .content(req)).andExpect(status().isOk());
-
-
     }
 
     @Test
-    void findAll() {
+    void create() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = Message.of("Hello");
+        message.setId(1L);
+        Person person = Person.of("1","1","1","1");
+        Room room = new Room();
+        room.setId(1L);
+        person.setRooms(List.of(room));
+        when(personService.findAll()).thenReturn(List.of(person));
+        when(roomService.findById(room.getId())).thenReturn(room);
+        when(messageService.create(message)).thenReturn(message);
+
+        String req = mapper.writer().writeValueAsString(message);
+        mvc.perform(post("/person/1/room/1/").contentType(MediaType.APPLICATION_JSON)
+                .content(req))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<Message> argument = ArgumentCaptor.forClass(Message.class);
+        verify(messageService).create(argument.capture());
+        MatcherAssert.assertThat(argument.getValue().getId(), is(1L));
+        MatcherAssert.assertThat(argument.getValue().getText(), is("Hello"));
     }
 
     @Test
-    void create() {
+    void update() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = Message.of("Hello");
+        message.setId(1L);
+
+        Person person = Person.of("1","1","1","1");
+        Room room = new Room();
+        room.setId(1L);
+        person.setRooms(List.of(room));
+        when(personService.findAll()).thenReturn(List.of(person));
+        when(roomService.findById(room.getId())).thenReturn(room);
+        when(messageService.create(message)).thenReturn(message);
+        message.setText("Hello1");
+        when(messageService.update(message)).thenReturn(message);
+
+        String req = mapper.writer().writeValueAsString(message);
+        mvc.perform(put("/person/1/room/1/1").contentType(MediaType.APPLICATION_JSON)
+                        .content(req))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<Message> argument = ArgumentCaptor.forClass(Message.class);
+        verify(messageService).update(argument.capture());
+        MatcherAssert.assertThat(argument.getValue().getText(), is("Hello1"));
     }
 
-    @Test
-    void update() {
-    }
 }

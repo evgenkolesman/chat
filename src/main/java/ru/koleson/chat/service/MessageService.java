@@ -21,7 +21,7 @@ public class MessageService {
 
     public Message findById(Long id) throws Exception {
         if (repo.findById(id).isPresent()) {
-        return repo.findById(id).get();
+            return repo.findById(id).get();
         } else throw new NotFoundException("400");
     }
 
@@ -30,15 +30,23 @@ public class MessageService {
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public void createOrUpdate(Message message) throws Exception{
-        if(message != null) {
-        repo.save(message);
-        } else throw  new ServerException("500");
+    public Message create(Message message) throws Exception {
+        if (message != null && findById(message.getId()) == null) {
+            return repo.save(message);
+        } else throw new ServerException("500");
     }
 
-    public void deleteMessage(Long id) {
+    public Message update(Message message) throws Exception {
+        if (message != null && findById(message.getId()) != null) {
+            return repo.save(message);
+        } else throw new ServerException("500");
+    }
+
+
+
+    public void deleteMessage(Long id) throws NotFoundException {
         if (repo.findById(id).isPresent()) {
             repo.deleteById(id);
-        }
+        } else throw new NotFoundException("400");
     }
 }
