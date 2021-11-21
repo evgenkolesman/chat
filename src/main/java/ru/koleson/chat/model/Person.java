@@ -25,14 +25,14 @@ public class Person {
     @NotNull
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_name")
-    private Role role;
+//    @ManyToOne
+//    @JoinColumn(name = "role_name")
+    private Roles role;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> messages;
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
     public static Person of(String login, String name, String surname, String password) {

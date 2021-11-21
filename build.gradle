@@ -8,6 +8,7 @@ group = 'ru.koleson'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -19,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.javassist:javassist:3.28.0-GA'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
     implementation 'org.postgresql:postgresql:42.3.1'
@@ -28,6 +30,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.5'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+
 }
 
 test {
