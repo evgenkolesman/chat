@@ -1,2 +1,3 @@
 rootProject.name = 'chat'
-include 'role'
+include ':role', ':chat'
+

@@ -2,12 +2,13 @@ package ru.koleson.chat.controller;
 
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ru.koleson.chat.model.Person;
+
 import ru.koleson.chat.service.PersonService;
+import ru.koleson.role.model.Roles;
+
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class PersonController {
      */
     @PutMapping("role/update/{id}/{name}")
     public String addRole(@PathVariable Long id, @PathVariable String name)  {
-        Person.setRole(rest.put(GETROLE, name));
+        Person.setRole(rest.getForObject(GETROLE, name, Roles));
         return "";
     }
 }
