@@ -1,43 +1,44 @@
-package ru.koleson.role.controller;
+package ru.koleson.chat.controller;
 
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.koleson.role.model.Roles;
-import ru.koleson.role.service.RoleService;
+import ru.koleson.chat.model.Role;
+import ru.koleson.chat.service.RoleService;
 
 import java.rmi.ServerException;
 import java.util.List;
 
-@RequestMapping("person/role/")
+@RestController
+@RequestMapping("person/role")
 @RequiredArgsConstructor
 public class RoleController {
 
     private final RoleService service;
 
     @GetMapping
-    public List<Roles> findAll() {
+    public List<Role> findAll() {
     return service.findAll();
     }
 
     @GetMapping("/{name}")
-    public Roles findByName(@PathVariable String name) throws NotFoundException {
+    public Role findByName(@PathVariable String name) throws NotFoundException {
         return service.findByRole(name);
     }
 
     @PostMapping
-    public String create(Roles role) throws ServerException {
+    public String create(@RequestBody Role role) throws ServerException {
        return service.create(role);
 
     }
 
-    @PutMapping
-    public String update(Roles role) throws Exception {
+    @PutMapping("/{name}")
+    public String update(@RequestBody Role role) throws Exception {
         return service.update(role);
     }
 
-    @DeleteMapping
-    public String delete(Roles role) {
+    @DeleteMapping("/{name}")
+    public String delete(@RequestBody Role role) {
         return service.delete(role);
     }
 }

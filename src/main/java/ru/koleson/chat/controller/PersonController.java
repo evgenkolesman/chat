@@ -3,12 +3,8 @@ package ru.koleson.chat.controller;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import ru.koleson.chat.model.Person;
-
 import ru.koleson.chat.service.PersonService;
-import ru.koleson.role.model.Roles;
-
 
 import java.util.List;
 
@@ -17,19 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PersonController {
 
-    private final RestTemplate rest;
     private final PersonService service;
-
-    private String GETROLES = "http://localhost:8080/person/role";
-    private String GETROLE = "http://localhost:8080/person/role/{name}";
 
     @GetMapping("/all")
     public List<Person> findAll() {
-       return service.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{login}")
-    public Person findByLogin (@PathVariable String login) throws NotFoundException {
+    public Person findByLogin(@PathVariable String login) throws NotFoundException {
         return service.findByLogin(login);
     }
 
@@ -49,14 +41,5 @@ public class PersonController {
     public String deletePerson(@PathVariable String login) throws Exception {
         service.deletePerson(login);
         return "200";
-    }
-
-    /**
-     * we use restTeamplate for update Role of Person
-     */
-    @PutMapping("role/update/{id}/{name}")
-    public String addRole(@PathVariable Long id, @PathVariable String name)  {
-        Person.setRole(rest.getForObject(GETROLE, name, Roles));
-        return "";
     }
 }

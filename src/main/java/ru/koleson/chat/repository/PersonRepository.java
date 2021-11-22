@@ -6,5 +6,4 @@ import ru.koleson.chat.model.Person;
 public interface PersonRepository extends CrudRepository<Person, String> {
 
     Person findByLogin(String login);
-
 }
