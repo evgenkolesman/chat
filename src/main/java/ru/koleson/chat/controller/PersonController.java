@@ -15,6 +15,11 @@ public class PersonController {
 
     private final PersonService service;
 
+    /**
+     * Use UserController#findAll
+     * @return
+     */
+    @Deprecated
     @GetMapping("/all")
     public List<Person> findAll() {
         return service.findAll();

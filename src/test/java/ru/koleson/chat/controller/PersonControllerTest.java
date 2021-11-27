@@ -35,6 +35,7 @@ class PersonControllerTest {
     @MockBean
     private PersonRepository personRepository;
 
+
     @Test
     void findAll() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -68,6 +69,11 @@ class PersonControllerTest {
                 .content(req)).andExpect(status().isOk());
     }
 
+    /**
+     * Use security model UserController#signUp
+     * @throws Exception
+     */
+    @Deprecated
     @Test
     void create() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
