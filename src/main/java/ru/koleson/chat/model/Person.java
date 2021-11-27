@@ -25,8 +25,8 @@ public class Person {
     @NotNull
     private String password;
 
-//    @ManyToOne
-//    @JoinColumn(name = "role_name")
+    @ManyToOne
+    @JoinColumn(name = "role_name")
     private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,6 +1,5 @@
 package ru.koleson.chat.service;
 
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
