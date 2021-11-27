@@ -1,4 +1,4 @@
-package ru.koleson.role.model;
+package ru.koleson.chat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Roles {
+public class Role {
 
     @Id
     private String name;

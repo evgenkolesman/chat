@@ -1,4 +1,4 @@
-package ru.koleson.role.repository;
+package ru.koleson.chat.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import ru.koleson.role.model.Roles;

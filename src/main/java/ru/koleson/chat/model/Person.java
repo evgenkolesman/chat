@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.koleson.role.model.Roles;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,7 +27,7 @@ public class Person {
 
 //    @ManyToOne
 //    @JoinColumn(name = "role_name")
-    private Roles role;
+    private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> messages;
