@@ -27,4 +27,9 @@ public class UserController {
     public List<Person> findAll() {
         return personService.findAll();
     }
+
+    @PostMapping("/login")
+    public Person signIn(@RequestBody Person person) throws Exception {
+       return personService.findByLogin(person.getLogin());
+    }
 }
